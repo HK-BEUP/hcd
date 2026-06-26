@@ -52,7 +52,12 @@ if count != 1:
 path.write_text(text)
 PY
 
-gofmt -w "$premine_file"
+gofmt_bin="${GOFMT:-gofmt}"
+if ! command -v "$gofmt_bin" >/dev/null 2>&1 && [ -x /tmp/go/bin/gofmt ]; then
+	gofmt_bin=/tmp/go/bin/gofmt
+fi
+
+"$gofmt_bin" -w "$premine_file"
 
 echo "Updated $premine_file"
 echo "Premine address: $address"

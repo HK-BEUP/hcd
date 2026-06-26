@@ -8,7 +8,9 @@ package chaincfg
 
 // BlockOneLedgerMainNet is the block one output ledger for the main
 // network.
-var BlockOneLedgerMainNet = []*TokenPayout{}
+var BlockOneLedgerMainNet = []*TokenPayout{
+	{Address: "VsbyU7TV7FeK54Jk5WkGHoYLfGu4fc78cQV", Amount: 840000000000000},
+}
 
 // BlockOneLedgerTestNet is the block one output ledger for the test
 // network.
