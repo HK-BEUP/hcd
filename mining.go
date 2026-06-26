@@ -44,7 +44,7 @@ const (
 
 	// coinbaseFlags is some extra data appended to the coinbase script
 	// sig.
-	coinbaseFlags = "/hcd/"
+	coinbaseFlags = "/vexond/"
 
 	// kilobyte is the size of a kilobyte.
 	kilobyte = 1000
@@ -487,7 +487,6 @@ func (bt *BlockTemplate) getCoinbaseExtranonces() []uint64 {
 
 	return ens
 }
-
 
 // UpdateExtraNonce updates the extra nonce in the coinbase script of the passed
 // block by regenerating the coinbase script with the passed value and block
@@ -1931,7 +1930,7 @@ mempoolLoop:
 	// the total fees accordingly.
 	if nextBlockHeight > 1 {
 		blockSize -= wire.MaxVarIntPayload -
-			uint32(wire.VarIntSerializeSize(uint64(len(blockTxnsRegular)) +
+			uint32(wire.VarIntSerializeSize(uint64(len(blockTxnsRegular))+
 				uint64(len(blockTxnsStake))))
 		coinbaseTx.MsgTx().TxOut[2].Value += totalFees
 		txFees[0] = -totalFees

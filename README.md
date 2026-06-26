@@ -1,5 +1,9 @@
-hcd
-====
+Vexon hcd fork
+==============
+
+This repository is being adapted for Vexon (VEX), a Blake256r14 ASIC-mined
+chain designed around the WhatsMiner D1. See [VEXON.md](VEXON.md) for the
+current Vexon chain parameter draft and implementation notes.
 
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 

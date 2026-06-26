@@ -31,23 +31,23 @@ const (
 
 // String returns the unit as a string.  For recognized units, the SI
 // prefix is used, or "Atom" for the base unit.  For all unrecognized
-// units, "1eN HC" is returned, where N is the AmountUnit.
+// units, "1eN VEX" is returned, where N is the AmountUnit.
 func (u AmountUnit) String() string {
 	switch u {
 	case AmountMegaCoin:
-		return "MHC"
+		return "MVEX"
 	case AmountKiloCoin:
-		return "kHC"
+		return "kVEX"
 	case AmountCoin:
-		return "HC"
+		return "VEX"
 	case AmountMilliCoin:
-		return "mHC"
+		return "mVEX"
 	case AmountMicroCoin:
-		return "μHC"
+		return "μVEX"
 	case AmountAtom:
 		return "Atom"
 	default:
-		return "1e" + strconv.FormatInt(int64(u), 10) + " HC"
+		return "1e" + strconv.FormatInt(int64(u), 10) + " VEX"
 	}
 }
 
@@ -71,7 +71,7 @@ func round(f float64) Amount {
 // but does not check that the amount is within the total amount of coins
 // producible as f may not refer to an amount at a single moment in time.
 //
-// NewAmount is for specifically for converting HC to Atoms (atomic units).
+// NewAmount is for specifically for converting VEX to Atoms (atomic units).
 // For creating a new Amount with an int64 value which denotes a quantity of
 // Atoms, do a simple type conversion from type int64 to Amount.
 // See GoDoc for example: http://godoc.org/github.com/HcashOrg/hcd/hcutil#example-Amount

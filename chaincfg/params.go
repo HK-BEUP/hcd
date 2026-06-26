@@ -448,27 +448,23 @@ type Params struct {
 	// DNSSeeds defines a list of DNS seeds for the network that are used
 	// as one method to discover peers.
 	OmniMoneyReceive string
-	OmniStartHeight uint64
+	OmniStartHeight  uint64
 }
 
-// MainNetParams defines the network parameters for the main Hcd network.
+// MainNetParams defines the network parameters for the main Vexon network.
 var MainNetParams = Params{
 	Name:        "mainnet",
 	Net:         wire.MainNet,
-	DefaultPort: "14008",
+	DefaultPort: "18555",
 	DNSSeeds: []string{
-		"mainnet1.h.cash",
-		"mainnet2.h.cash",
-		"mainnet3.h.cash",
-		"mainnet4.h.cash",
-		"mainnet5.h.cash",
+		"seed.vexonus.com",
 	},
 
 	// Chain parameters
 	GenesisBlock:             &genesisBlock,
 	GenesisHash:              &genesisHash,
 	PowLimit:                 mainPowLimit,
-	PowLimitBits:             0x1d00ffff,
+	PowLimitBits:             0x1e00ffff,
 	ReduceMinDifficulty:      false,
 	MinDiffReductionTime:     0, // Does not apply since ReduceMinDifficulty false
 	GenerateSupported:        false,
@@ -482,13 +478,13 @@ var MainNetParams = Params{
 	RetargetAdjustmentFactor: 4,
 
 	// Subsidy parameters.
-	BaseSubsidy:              640000000, // ~84m = Premine + Total subsidy
-	MulSubsidy:               999,
-	DivSubsidy:               1000,
-	SubsidyReductionInterval: 12288,
-	WorkRewardProportion:     6,
-	StakeRewardProportion:    3,
-	BlockTaxProportion:       1,
+	BaseSubsidy:              50 * 1e8,
+	MulSubsidy:               1,
+	DivSubsidy:               2,
+	SubsidyReductionInterval: 420000,
+	WorkRewardProportion:     10,
+	StakeRewardProportion:    0,
+	BlockTaxProportion:       0,
 
 	// Checkpoints ordered from oldest to newest.
 	Checkpoints: []Checkpoint{},
@@ -515,31 +511,31 @@ var MainNetParams = Params{
 	RelayNonStdTxs: false,
 
 	// Address encoding magics
-	NetworkAddressPrefix: "H",
-	PubKeyAddrID:         [2]byte{0x19, 0xa4}, // starts with Hk
-	PubKeyBlissAddrID:    [2]byte{0x07, 0xc3}, // starts with Hk
-	PubKeyHashAddrID:     [2]byte{0x09, 0x7f}, // starts with Hs
-	PKHEdwardsAddrID:     [2]byte{0x09, 0x60}, // starts with He
-	PKHSchnorrAddrID:     [2]byte{0x09, 0x41}, // starts with HS
-	PKHBlissAddrID:       [2]byte{0x09, 0x58}, // starts with Hb
-	ScriptHashAddrID:     [2]byte{0x09, 0x5a}, // starts with Hc
-	PrivateKeyID:         [2]byte{0x19, 0xab}, // starts with Hm
+	NetworkAddressPrefix: "V",
+	PubKeyAddrID:         [2]byte{0x10, 0x2f}, // starts with Vk
+	PubKeyBlissAddrID:    [2]byte{0x10, 0x2f}, // starts with Vk
+	PubKeyHashAddrID:     [2]byte{0x10, 0x41}, // starts with Vs
+	PKHEdwardsAddrID:     [2]byte{0x10, 0x20}, // starts with Ve
+	PKHSchnorrAddrID:     [2]byte{0x10, 0x03}, // starts with VS
+	PKHBlissAddrID:       [2]byte{0x10, 0x19}, // starts with Vb
+	ScriptHashAddrID:     [2]byte{0x10, 0x1b}, // starts with Vc
+	PrivateKeyID:         [2]byte{0x10, 0x32}, // starts with Vm
 
 	// BIP32 hierarchical deterministic extended key magics
-	HDPrivateKeyID: [4]byte{0x02, 0xfd, 0xa4, 0xe8}, // starts with dprv
-	HDPublicKeyID:  [4]byte{0x02, 0xfd, 0xa9, 0x26}, // starts with dpub
+	HDPrivateKeyID: [4]byte{0x04, 0x88, 0xad, 0xe4}, // starts with xprv
+	HDPublicKeyID:  [4]byte{0x04, 0x88, 0xb2, 0x1e}, // starts with xpub
 
 	// BIP44 coin type used in the hierarchical deterministic path for
 	// address generation.
-	HDCoinType: uint32(171),
+	HDCoinType: uint32(999),
 
 	// Hcd PoS parameters
-	MinimumStakeDiff:        2 * 1e8, // 2 Coin
+	MinimumStakeDiff:        2 * 1e8, // 2 VEX
 	TicketPoolSize:          8192,
 	TicketsPerBlock:         5,
 	TicketMaturity:          512,
 	TicketExpiry:            40960, // 5*TicketPoolSize
-	CoinbaseMaturity:        512,
+	CoinbaseMaturity:        100,
 	SStxChangeMaturity:      1,
 	TicketPoolSizeWeight:    4,
 	StakeDiffAlpha:          1, // Minimal
@@ -547,19 +543,18 @@ var MainNetParams = Params{
 	StakeDiffWindows:        20,
 	StakeVersionInterval:    288 * 2 * 7, // ~1 week
 	MaxFreshStakePerBlock:   20,          // 4*TicketsPerBlock
-	StakeEnabledHeight:      512 + 512,   // CoinbaseMaturity + TicketMaturity
-	StakeValidationHeight:   4096,        // ~7 days
+	StakeEnabledHeight:      math.MaxInt32,
+	StakeValidationHeight:   math.MaxInt32,
 	StakeBaseSigScript:      []byte{0x00, 0x00},
 	StakeMajorityMultiplier: 3,
 	StakeMajorityDivisor:    4,
 
-	// Hcd organization related parameters
-	// Organization address is xxxxxxx
-	OrganizationPkScript:        hexDecode("76a9141842627102a8a153c1a8db39c9a30c0f8f5263d988ac"),
+	// Vexon organization related parameters.
+	OrganizationPkScript:        nil,
 	OrganizationPkScriptVersion: 0,
 	BlockOneLedger:              BlockOneLedgerMainNet,
-	OmniMoneyReceive:            "HsTJckn6hjhP4QYHF7CE87ok3y5TDA2gd6D",
-	OmniStartHeight:			 46000,
+	OmniMoneyReceive:            "",
+	OmniStartHeight:             math.MaxUint64,
 }
 
 // TestNet2Params defines the network parameters for the test currency network.
@@ -568,11 +563,9 @@ var MainNetParams = Params{
 var TestNet2Params = Params{
 	Name:        "testnet2",
 	Net:         wire.TestNet2,
-	DefaultPort: "12008",
+	DefaultPort: "28555",
 	DNSSeeds: []string{
-		"testnet1.h.cash",
-		"testnet2.h.cash",
-		"testnet3.h.cash",
+		"testnet-seed.vexonus.com",
 	},
 
 	// Chain parameters
@@ -585,21 +578,21 @@ var TestNet2Params = Params{
 	GenerateSupported:        true,
 	MaximumBlockSizes:        []int{1310720},
 	MaxTxSize:                1000000,
-	TargetTimePerBlock:       time.Minute,
+	TargetTimePerBlock:       time.Second * 150,
 	WorkDiffAlpha:            1,
-	WorkDiffWindowSize:       144,
+	WorkDiffWindowSize:       288,
 	WorkDiffWindows:          20,
-	TargetTimespan:           time.Minute * 144, // TimePerBlock * WindowSize
+	TargetTimespan:           time.Second * 150 * 288, // TimePerBlock * WindowSize
 	RetargetAdjustmentFactor: 4,
 
 	// Subsidy parameters.
-	BaseSubsidy:              640000000, // ~84m = Premine + Total subsidy
-	MulSubsidy:               999,
-	DivSubsidy:               1000,
-	SubsidyReductionInterval: 2048,
-	WorkRewardProportion:     6,
-	StakeRewardProportion:    3,
-	BlockTaxProportion:       1,
+	BaseSubsidy:              50 * 1e8,
+	MulSubsidy:               1,
+	DivSubsidy:               2,
+	SubsidyReductionInterval: 420000,
+	WorkRewardProportion:     10,
+	StakeRewardProportion:    0,
+	BlockTaxProportion:       0,
 
 	// Checkpoints ordered from oldest to newest.
 	Checkpoints: []Checkpoint{},
@@ -681,7 +674,7 @@ var TestNet2Params = Params{
 	TicketsPerBlock:         5,
 	TicketMaturity:          16,
 	TicketExpiry:            6144, // 6*TicketPoolSize
-	CoinbaseMaturity:        16,
+	CoinbaseMaturity:        100,
 	SStxChangeMaturity:      1,
 	TicketPoolSizeWeight:    4,
 	StakeDiffAlpha:          1,
@@ -689,19 +682,18 @@ var TestNet2Params = Params{
 	StakeDiffWindows:        20,
 	StakeVersionInterval:    144 * 2 * 7, // ~1 week
 	MaxFreshStakePerBlock:   20,          // 4*TicketsPerBlock
-	StakeEnabledHeight:      16 + 16,     // CoinbaseMaturity + TicketMaturity
-	StakeValidationHeight:   775,         // Arbitrary
+	StakeEnabledHeight:      math.MaxInt32,
+	StakeValidationHeight:   math.MaxInt32,
 	StakeBaseSigScript:      []byte{0x00, 0x00},
 	StakeMajorityMultiplier: 3,
 	StakeMajorityDivisor:    4,
 
-	// Hcd organization related parameters.
-	// Organization address is TcYvmPS6xs41gJExBaeUzT55epgwtHzjMAC
-	OrganizationPkScript:        hexDecode("5221031377eb7eb294ba8d0c81bb64a047c9b36561f3899507679b38cfcbf59e016f9421036806c694f4d5d617259b5fabaf9ad84c20c2bf57b1a171fb6048215d6d71e13e52ae"),
+	// Vexon organization related parameters.
+	OrganizationPkScript:        nil,
 	OrganizationPkScriptVersion: 0,
 	BlockOneLedger:              BlockOneLedgerTestNet2,
-	OmniMoneyReceive:            "TsSmoC9HdBhDhq4ut4TqJY7SBjPqJFAPkGK",
-	OmniStartHeight:			 46000,
+	OmniMoneyReceive:            "",
+	OmniStartHeight:             math.MaxUint64,
 }
 
 // SimNetParams defines the network parameters for the simulation test Hcd
@@ -870,7 +862,7 @@ var SimNetParams = Params{
 	OrganizationPkScript:        hexDecode("a914cbb08d6ca783b533b2c7d24a51fbca92d937bf9987"),
 	OrganizationPkScriptVersion: 0,
 	BlockOneLedger:              BlockOneLedgerSimNet,
-	OmniStartHeight:			 46000,
+	OmniStartHeight:             46000,
 }
 
 var (

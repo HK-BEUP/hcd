@@ -62,8 +62,8 @@ const (
 
 var (
 	// userAgentName is the user agent name and is used to help identify
-	// ourselves to other HC peers.
-	userAgentName = "hcd"
+	// ourselves to other Vexon peers.
+	userAgentName = "vexond"
 
 	// userAgentVersion is the user agent version and is used to help
 	// identify ourselves to other peers.
@@ -212,6 +212,7 @@ type serverPeer struct {
 	txProcessed    chan struct{}
 	blockProcessed chan struct{}
 }
+
 // Only respond with addresses once per connection
 //if sp.addrsSent {
 //	peerLog.Tracef("Ignoring getaddr from %v - already sent", sp.Peer)
@@ -334,13 +335,11 @@ func (sp *serverPeer) addBanScore(persistent, transient uint32, reason string) {
 	}
 }
 
-
 // hasServices returns whether or not the provided advertised service flags have
 // all of the provided desired service flags set.
 func hasServices(advertised, desired wire.ServiceFlag) bool {
 	return advertised&desired == desired
 }
-
 
 // OnVersion is invoked when a peer receives a version wire message and is used
 // to negotiate the protocol version details as well as kick start the
@@ -357,7 +356,7 @@ func (sp *serverPeer) OnVersion(p *peer.Peer, msg *wire.MsgVersion) {
 	// it is updated regardless in the case a new minimum protocol version is
 	// enforced and the remote node has not upgraded yet.
 	addrManager := sp.server.addrManager
-	isInbound:=sp.Inbound()
+	isInbound := sp.Inbound()
 	remoteAddr := sp.NA()
 	if !cfg.SimNet && !isInbound {
 		addrManager.SetServices(remoteAddr, msg.Services)
@@ -365,7 +364,7 @@ func (sp *serverPeer) OnVersion(p *peer.Peer, msg *wire.MsgVersion) {
 	// Ignore peers that have a protcol version that is too old.  The peer
 	// negotiation logic will disconnect it after this callback returns.
 	if msg.ProtocolVersion < int32(wire.InitialProcotolVersion) {
-		return 
+		return
 	}
 	// Add the remote peer time as a sample for creating an offset against
 	// the local clock to keep the network time in sync.
@@ -373,17 +372,17 @@ func (sp *serverPeer) OnVersion(p *peer.Peer, msg *wire.MsgVersion) {
 
 	// Signal the block manager this peer is a new sync candidate.
 	sp.server.blockManager.NewPeer(sp)
-	//format example /hcd:2.0.0/
-	var valid = regexp.MustCompile("hcd:[0-9]*.[0-9]*.[0-9]*")
+	//format example /vexond:2.0.0/
+	var valid = regexp.MustCompile("vexond:[0-9]*.[0-9]*.[0-9]*")
 	val := valid.FindAllStringSubmatch(p.UserAgent(), 1)
 	if !(len(val) != 0 && len(val[0]) != 0) {
-		peerLog.Warnf("peer has no hcd agentVersion %s ", sp)
+		peerLog.Warnf("peer has no vexond agentVersion %s ", sp)
 		sp.server.BanPeer(sp)
 		sp.Disconnect()
 		return
 	}
 
-	receiveVerisonStr := strings.TrimLeft(val[0][0], "hcd:")
+	receiveVerisonStr := strings.TrimLeft(val[0][0], "vexond:")
 	versionArray := strings.Split(receiveVerisonStr, ".")
 	if len(versionArray) != 3 {
 		peerLog.Warnf("parser remote app version %s fail", sp)
@@ -750,7 +749,7 @@ func (sp *serverPeer) OnGetData(p *peer.Peer, msg *wire.MsgGetData) {
 			err = sp.server.pushBlockMsg(sp, &iv.Hash, c, waitChan)
 		default:
 			peerLog.Warnf("Unknown type %d in inventory request from %s",
-				iv.Type,sp)
+				iv.Type, sp)
 			continue
 		}
 		if err != nil {
@@ -796,7 +795,6 @@ func (sp *serverPeer) OnGetBlocks(p *peer.Peer, msg *wire.MsgGetBlocks) {
 		}
 	}
 
-	
 	// Use the block after the genesis block if no other blocks in the
 	// provided locator are known.  This does mean the client will start
 	// over with the genesis block if unknown block locators are provided.
@@ -1102,7 +1100,7 @@ func (sp *serverPeer) OnAddr(p *peer.Peer, msg *wire.MsgAddr) {
 		// Set the timestamp to 5 days ago if it's more than 24 hours
 		// in the future so this address is one of the first to be
 		// removed when space is needed.
-		
+
 		if na.Timestamp.After(now.Add(time.Minute * 10)) {
 			na.Timestamp = now.Add(-1 * time.Hour * 24 * 5)
 		}
@@ -2118,8 +2116,6 @@ func (s *server) WaitForShutdown() {
 	s.wg.Wait()
 }
 
-
-
 // parseListeners splits the list of listen addresses passed in addrs into
 // IPv4 and IPv6 slices and returns them.  This allows easy creation of the
 // listeners on the correct interface "tcp4" and "tcp6".  It also properly
@@ -2609,7 +2605,6 @@ func addrStringToNetAddr(addr string) (net.Addr, error) {
 		Port: port,
 	}, nil
 }
-
 
 // isWhitelisted returns whether the IP address is included in the whitelisted
 // networks and IPs.

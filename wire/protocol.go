@@ -87,25 +87,25 @@ func (f ServiceFlag) String() string {
 	return s
 }
 
-// CurrencyNet represents which hcd network a message belongs to.
+// CurrencyNet represents which Vexon network a message belongs to.
 type CurrencyNet uint32
 
-// Constants used to indicate the message hcd network.  They can also be
+// Constants used to indicate the message Vexon network.  They can also be
 // used to seek to the next message when a stream's state is unknown, but
 // this package does not provide that functionality since it's generally a
 // better idea to simply disconnect clients that are misbehaving over TCP.
 const (
-	// MainNet represents the main hc network.
-	MainNet CurrencyNet = 0x1125f51b
+	// MainNet represents the main Vexon network.
+	MainNet CurrencyNet = 0x5645584d
 
 	// RegTest represents the regression test network.
-	RegTest CurrencyNet = 0xc07cb5dd
+	RegTest CurrencyNet = 0x56455852
 
 	// TestNet2 represents the 2nd test network.
-	TestNet2 CurrencyNet = 0x9ab5693b
+	TestNet2 CurrencyNet = 0x56455854
 
 	// SimNet represents the simulation test network.
-	SimNet CurrencyNet = 0x8a136344
+	SimNet CurrencyNet = 0x56455853
 )
 
 // bnStrings is a map of hcd networks back to their constant names for

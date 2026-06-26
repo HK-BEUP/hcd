@@ -34,11 +34,11 @@ import (
 )
 
 const (
-	defaultConfigFilename        = "hcd.conf"
+	defaultConfigFilename        = "vexond.conf"
 	defaultDataDirname           = "data"
 	defaultLogLevel              = "info"
 	defaultLogDirname            = "logs"
-	defaultLogFilename           = "hcd.log"
+	defaultLogFilename           = "vexond.log"
 	defaultMaxPeers              = 125
 	defaultBanDuration           = time.Hour * 24
 	defaultBanThreshold          = 100
@@ -62,7 +62,7 @@ const (
 )
 
 var (
-	defaultHomeDir     = hcutil.AppDataDir("hcd", false)
+	defaultHomeDir     = hcutil.AppDataDir("vexond", false)
 	defaultConfigFile  = filepath.Join(defaultHomeDir, defaultConfigFilename)
 	defaultDataDir     = filepath.Join(defaultHomeDir, defaultDataDirname)
 	knownDbTypes       = database.SupportedDrivers()
@@ -135,7 +135,7 @@ type config struct {
 	MiningTimeOffset     int           `long:"miningtimeoffset" description:"Offset the mining timestamp of a block by this many seconds (positive values are in the past)"`
 	DebugLevel           string        `short:"d" long:"debuglevel" description:"Logging level for all subsystems {trace, debug, info, warn, error, critical} -- You may also specify <subsystem>=<level>,<subsystem2>=<level>,... to set the log level for individual subsystems -- Use show to list available subsystems"`
 	Upnp                 bool          `long:"upnp" description:"Use UPnP to map our listening port outside of NAT"`
-	MinRelayTxFee        float64       `long:"minrelaytxfee" description:"The minimum transaction fee in HC/kB to be considered a non-zero fee."`
+	MinRelayTxFee        float64       `long:"minrelaytxfee" description:"The minimum transaction fee in VEX/kB to be considered a non-zero fee."`
 	FreeTxRelayLimit     float64       `long:"limitfreerelay" description:"Limit relay of transactions with no transaction fee to the given amount in thousands of bytes per minute"`
 	NoRelayPriority      bool          `long:"norelaypriority" description:"Do not require free or low-fee transactions to have high priority for relaying"`
 	MaxOrphanTxs         int           `long:"maxorphantx" description:"Max number of orphan transactions to keep in memory"`
@@ -639,7 +639,7 @@ func loadConfig() (*config, []string, error) {
 	var oldTestNets []string
 	oldTestNets = append(oldTestNets, filepath.Join(cfg.DataDir, "testnet"))
 	oldTestNets = append(oldTestNets, filepath.Join(cfg.DataDir, "testnet2"))
-	
+
 	cfg.DataDir = filepath.Join(cfg.DataDir, netName(activeNetParams))
 
 	// Append the network type to the log directory so it is "namespaced"
