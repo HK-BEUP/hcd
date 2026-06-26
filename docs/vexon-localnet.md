@@ -84,3 +84,10 @@ Use separate terminals.
 Only copy the returned public `Vs...` address into `chaincfg/premine.go`.
 Never copy wallet seed words, wallet database files, TLS private keys, or RPC
 passwords into Git.
+
+After you have the public address:
+
+```sh
+cd /Users/minxiangcai/Documents/HcashOrg/hcd
+scripts/set-vexon-premine.sh VsYourPremineAddressHere
+```

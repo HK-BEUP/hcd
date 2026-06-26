@@ -62,8 +62,14 @@ only from a wallet seed that you control and have backed up offline.
 3. Start `vexond` and `vexonwallet` on localhost.
 4. Run `vexonctl --wallet getnewaddress` and use the returned `Vs...` address
    as the premine destination.
-5. Add that public address to `chaincfg/premine.go`. Do not commit wallet seed
-   words, wallet databases, RPC passwords, TLS keys, or backup archives.
+5. Add that public address to `chaincfg/premine.go`:
+
+   ```sh
+   scripts/set-vexon-premine.sh VsYourPremineAddressHere
+   ```
+
+   Do not commit wallet seed words, wallet databases, RPC passwords, TLS keys,
+   or backup archives.
 
 ## Local verification
 
