@@ -15,12 +15,17 @@ chain intended to be mined by WhatsMiner D1 hardware.
 - Base unit: 1 VEX = 100,000,000 atoms
 - Coinbase maturity: 100 blocks
 - Mainnet P2P port: 18555
+- Mainnet node RPC port: 18556
+- Mainnet wallet RPC port: 18557
 - Testnet P2P port: 28555
+- Testnet node RPC port: 28556
+- Testnet wallet RPC port: 28557
 - Mainnet DNS seed: seed.vexonus.com
 - Testnet DNS seed: testnet-seed.vexonus.com
 - Mainnet address prefix: V
 - Default data directory: vexond
 - Default config file: vexond.conf
+- Default control config file: vexonctl.conf
 
 ## Implementation notes
 
@@ -47,6 +52,19 @@ mine blocks reliably.
 - Decide whether testnet should keep 150-second spacing or use faster private
   testing parameters before public launch.
 
+## Premine address workflow
+
+The mainnet premine is planned as 8,400,000 VEX. Generate the premine address
+only from a wallet seed that you control and have backed up offline.
+
+1. Build the Vexon wallet from the matching `hcwallet` branch.
+2. Create a fresh wallet and write down the seed before using it.
+3. Start `vexond` and `vexonwallet` on localhost.
+4. Run `vexonctl --wallet getnewaddress` and use the returned `Vs...` address
+   as the premine destination.
+5. Add that public address to `chaincfg/premine.go`. Do not commit wallet seed
+   words, wallet databases, RPC passwords, TLS keys, or backup archives.
+
 ## Local verification
 
 Install Go 1.13+ first. On macOS, one simple path is:
@@ -60,6 +78,10 @@ Then run:
 ```sh
 cd /Users/minxiangcai/Documents/HcashOrg/hcd
 gofmt -w chaincfg/params.go chaincfg/genesis.go chaincfg/premine.go wire/protocol.go hcutil/amount.go config.go server.go mining.go log.go
-go build ./...
+go build .
+go build ./cmd/hcctl
 ```
 
+The repository still contains old helper commands that require incomplete
+upstream dependencies, so verify Vexon node work with the main package and the
+tools that are actively being forked.

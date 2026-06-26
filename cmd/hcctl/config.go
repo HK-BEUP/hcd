@@ -31,10 +31,10 @@ const (
 )
 
 var (
-	hcdHomeDir             = hcutil.AppDataDir("hcd", false)
-	hcctlHomeDir           = hcutil.AppDataDir("hcctl", false)
-	hcwalletHomeDir        = hcutil.AppDataDir("hcwallet", false)
-	defaultConfigFile      = filepath.Join(hcctlHomeDir, "hcctl.conf")
+	hcdHomeDir             = hcutil.AppDataDir("vexond", false)
+	hcctlHomeDir           = hcutil.AppDataDir("vexonctl", false)
+	hcwalletHomeDir        = hcutil.AppDataDir("vexonwallet", false)
+	defaultConfigFile      = filepath.Join(hcctlHomeDir, "vexonctl.conf")
 	defaultRPCServer       = "localhost"
 	defaultWalletRPCServer = "localhost"
 	defaultRPCCertFile     = filepath.Join(hcdHomeDir, "rpc.cert")
@@ -99,7 +99,7 @@ func listCommands() {
 	}
 }
 
-// config defines the configuration options for hcctl.
+// config defines the configuration options for vexonctl.
 //
 // See loadConfig for details on the configuration load process.
 type config struct {
@@ -131,9 +131,9 @@ func normalizeAddress(addr string, useTestNet, useSimNet, useWallet bool) string
 		switch {
 		case useTestNet:
 			if useWallet {
-				defaultPort = "12010"
+				defaultPort = "28557"
 			} else {
-				defaultPort = "12009"
+				defaultPort = "28556"
 			}
 		case useSimNet:
 			if useWallet {
@@ -143,9 +143,9 @@ func normalizeAddress(addr string, useTestNet, useSimNet, useWallet bool) string
 			}
 		default:
 			if useWallet {
-				defaultPort = "14010"
+				defaultPort = "18557"
 			} else {
-				defaultPort = "14009"
+				defaultPort = "18556"
 			}
 		}
 
@@ -342,17 +342,17 @@ func loadConfig() (*config, []string, error) {
 }
 
 // createDefaultConfig creates a basic config file at the given destination path.
-// For this it tries to read the hcd config file at its default path, and extract
+// For this it tries to read the vexond config file at its default path, and extract
 // the RPC user and password from it.
 func createDefaultConfigFile(destinationPath string) error {
-	// Nothing to do when there is no existing hcd conf file at the default
+	// Nothing to do when there is no existing vexond conf file at the default
 	// path to extract the details from.
-	hcdConfigPath := filepath.Join(hcdHomeDir, "hcd.conf")
+	hcdConfigPath := filepath.Join(hcdHomeDir, "vexond.conf")
 	if !fileExists(hcdConfigPath) {
 		return nil
 	}
 
-	// Read hcd.conf from its default path
+	// Read vexond.conf from its default path
 	hcdConfigFile, err := os.Open(hcdConfigPath)
 	if err != nil {
 		return err
