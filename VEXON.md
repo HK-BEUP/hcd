@@ -77,11 +77,17 @@ Then run:
 
 ```sh
 cd /Users/minxiangcai/Documents/HcashOrg/hcd
-gofmt -w chaincfg/params.go chaincfg/genesis.go chaincfg/premine.go wire/protocol.go hcutil/amount.go config.go server.go mining.go log.go
-go build .
-go build ./cmd/hcctl
+chmod +x scripts/build-vexon-node.sh
+GO=/tmp/go/bin/go scripts/build-vexon-node.sh
 ```
 
 The repository still contains old helper commands that require incomplete
 upstream dependencies, so verify Vexon node work with the main package and the
 tools that are actively being forked.
+
+The script writes:
+
+```text
+bin/vexond
+bin/vexonctl
+```
