@@ -59,6 +59,18 @@ mine blocks reliably.
   for local development.
 - CPU `generate 1` on simnet has been verified to mine block 1 and place the
   premine output in the block-one transaction.
+- `go test ./chaincfg` passes with Vexon genesis snapshots.
+
+## Current genesis snapshot
+
+These values identify the current Vexon chain parameters and should change only
+when the chain is intentionally reset.
+
+| Network | Genesis hash | Merkle root | Bits | Timestamp |
+| --- | --- | --- | --- | --- |
+| mainnet | `bfc6a2f825d38f4973b90778b4a7ec9a9b36e368c471f5177181eb71a878603b` | `208b9a19a2d44f197a62bac7dc511b49a43a1e62222b740dfa67f6097fdf94e8` | `1e00ffff` | `1782518400` |
+| testnet2 | `c8a883d1f85ba48a46fd004297261c3132055e48c95767922357ee93ea69ca2c` | `a216ea043f0d481a072424af646787794c32bcefd3ed181a090319bbf8a37105` | `1e00ffff` | `1782518400` |
+| simnet | `a088d3a739e107f016a01e46e60c644c97ed0d4fb5336f8784a4a042a2d5baf0` | `208b9a19a2d44f197a62bac7dc511b49a43a1e62222b740dfa67f6097fdf94e8` | `207fffff` | `1401292357` |
 
 ## Premine address workflow
 
