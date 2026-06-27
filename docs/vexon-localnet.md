@@ -33,7 +33,8 @@ cat > "$HOME/.vexonwallet/vexonwallet.conf" <<'EOF'
 username=CHANGE_ME_RPC_USER
 password=CHANGE_ME_RPC_PASS
 rpclisten=127.0.0.1:18557
-rpccert=~/.vexond/rpc.cert
+cafile=~/.vexond/rpc.cert
+noservertls=1
 EOF
 
 cat > "$HOME/.vexonctl/vexonctl.conf" <<'EOF'
@@ -69,7 +70,9 @@ Use separate terminals.
 /Users/minxiangcai/Documents/HcashOrg/hcwallet/bin/vexonwallet \
   --configfile "$HOME/.vexonwallet/vexonwallet.conf" \
   --appdata "$HOME/.vexonwallet" \
-  --rpcconnect 127.0.0.1:18556
+  --rpcconnect 127.0.0.1:18556 \
+  --cafile "$HOME/.vexond/rpc.cert" \
+  --noservertls
 ```
 
 ## Get the public premine address
