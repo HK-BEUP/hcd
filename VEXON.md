@@ -43,14 +43,22 @@ mine blocks reliably.
 
 ## Pending decisions
 
-- Generate a real VEX premine address after the wallet fork is updated.
-- Add the 8,400,000 VEX premine ledger entry to `chaincfg/premine.go`.
 - Recalculate and freeze final genesis nonce/hash after mainnet parameters are
   final.
 - Update wallet, RPC tool, explorer, and YiiMP stratum repos to use Vexon names,
   ports, units, and address prefixes.
 - Decide whether testnet should keep 150-second spacing or use faster private
   testing parameters before public launch.
+
+## Completed local validation
+
+- Premine address:
+  `VsbyU7TV7FeK54Jk5WkGHoYLfGu4fc78cQV`
+- Mainnet and simnet block-one ledgers include 8,400,000 VEX to that address.
+- Simnet is aligned with Vexon address prefixes and PoW-only reward proportions
+  for local development.
+- CPU `generate 1` on simnet has been verified to mine block 1 and place the
+  premine output in the block-one transaction.
 
 ## Premine address workflow
 
@@ -96,4 +104,10 @@ The script writes:
 ```text
 bin/vexond
 bin/vexonctl
+```
+
+Run the local simnet verification:
+
+```sh
+scripts/verify-vexon-simnet.sh
 ```
