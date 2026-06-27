@@ -727,13 +727,13 @@ var SimNetParams = Params{
 	RetargetAdjustmentFactor: 4,
 
 	// Subsidy parameters.
-	BaseSubsidy:              640000000, // ~84m = Premine + Total subsidy
-	MulSubsidy:               999,
-	DivSubsidy:               1000,
-	SubsidyReductionInterval: 128,
-	WorkRewardProportion:     6,
-	StakeRewardProportion:    3,
-	BlockTaxProportion:       1,
+	BaseSubsidy:              50 * 1e8,
+	MulSubsidy:               1,
+	DivSubsidy:               2,
+	SubsidyReductionInterval: 420000,
+	WorkRewardProportion:     10,
+	StakeRewardProportion:    0,
+	BlockTaxProportion:       0,
 
 	// Checkpoints ordered from oldest to newest.
 	Checkpoints: nil,
@@ -791,23 +791,23 @@ var SimNetParams = Params{
 	RelayNonStdTxs: true,
 
 	// Address encoding magics
-	NetworkAddressPrefix: "S",
-	PubKeyAddrID:         [2]byte{0x27, 0x6f}, // starts with Sk
-	PubKeyBlissAddrID:    [2]byte{0x0b, 0xef}, // starts with Sk
-	PubKeyHashAddrID:     [2]byte{0x0e, 0x91}, // starts with Ss
-	PKHEdwardsAddrID:     [2]byte{0x0e, 0x71}, // starts with Se
-	PKHSchnorrAddrID:     [2]byte{0x0e, 0x53}, // starts with SS
-	PKHBlissAddrID:       [2]byte{0x0e, 0x69}, // starts with Sb
-	ScriptHashAddrID:     [2]byte{0x0e, 0x6c}, // starts with Sc
-	PrivateKeyID:         [2]byte{0x23, 0x07}, // starts with Ps
+	NetworkAddressPrefix: "V",
+	PubKeyAddrID:         [2]byte{0x10, 0x2f}, // starts with Vk
+	PubKeyBlissAddrID:    [2]byte{0x10, 0x17}, // starts with Vk
+	PubKeyHashAddrID:     [2]byte{0x10, 0x41}, // starts with Vs
+	PKHEdwardsAddrID:     [2]byte{0x10, 0x21}, // starts with Ve
+	PKHSchnorrAddrID:     [2]byte{0x10, 0x03}, // starts with VS
+	PKHBlissAddrID:       [2]byte{0x10, 0x19}, // starts with Vb
+	ScriptHashAddrID:     [2]byte{0x10, 0x1b}, // starts with Vc
+	PrivateKeyID:         [2]byte{0x10, 0x32}, // starts with Vm
 
 	// BIP32 hierarchical deterministic extended key magics
-	HDPrivateKeyID: [4]byte{0x04, 0x20, 0xb9, 0x03}, // starts with sprv
-	HDPublicKeyID:  [4]byte{0x04, 0x20, 0xbd, 0x3d}, // starts with spub
+	HDPrivateKeyID: [4]byte{0x04, 0x88, 0xad, 0xe4}, // starts with xprv
+	HDPublicKeyID:  [4]byte{0x04, 0x88, 0xb2, 0x1e}, // starts with xpub
 
 	// BIP44 coin type used in the hierarchical deterministic path for
 	// address generation.
-	HDCoinType: uint32(171), // ASCII for s
+	HDCoinType: uint32(200),
 
 	// Hcd PoS parameters
 	MinimumStakeDiff:        20000,
@@ -822,9 +822,9 @@ var SimNetParams = Params{
 	StakeDiffWindowSize:     8,
 	StakeDiffWindows:        8,
 	StakeVersionInterval:    8 * 2 * 7,
-	MaxFreshStakePerBlock:   20,            // 4*TicketsPerBlock
-	StakeEnabledHeight:      16 + 16,       // CoinbaseMaturity + TicketMaturity
-	StakeValidationHeight:   16 + (64 * 2), // CoinbaseMaturity + TicketPoolSize*2
+	MaxFreshStakePerBlock:   20, // 4*TicketsPerBlock
+	StakeEnabledHeight:      math.MaxInt32,
+	StakeValidationHeight:   math.MaxInt32,
 	StakeBaseSigScript:      []byte{0xDE, 0xAD, 0xBE, 0xEF},
 	StakeMajorityMultiplier: 3,
 	StakeMajorityDivisor:    4,
@@ -859,10 +859,10 @@ var SimNetParams = Params{
 	//   SkQkfkHZeBbMW8129tZ3KspEh1XBFC1btbkgzs6cjSyPbrgxzsKqk
 	//
 	// Organization address is ScuQxvveKGfpG1ypt6u27F99Anf7EW3cqhq
-	OrganizationPkScript:        hexDecode("a914cbb08d6ca783b533b2c7d24a51fbca92d937bf9987"),
+	OrganizationPkScript:        nil,
 	OrganizationPkScriptVersion: 0,
 	BlockOneLedger:              BlockOneLedgerSimNet,
-	OmniStartHeight:             46000,
+	OmniStartHeight:             math.MaxUint64,
 }
 
 var (

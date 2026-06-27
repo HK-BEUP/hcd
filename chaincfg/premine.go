@@ -23,4 +23,6 @@ var BlockOneLedgerTestNet2 = []*TokenPayout{}
 // BlockOneLedgerSimNet is the block one output ledger for the simulation
 // network. See under "Hcd organization related parameters" in params.go
 // for information on how to spend these outputs.
-var BlockOneLedgerSimNet = []*TokenPayout{}
+var BlockOneLedgerSimNet = []*TokenPayout{
+	{Address: "VsbyU7TV7FeK54Jk5WkGHoYLfGu4fc78cQV", Amount: 840000000000000},
+}
